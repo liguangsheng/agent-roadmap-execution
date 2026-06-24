@@ -18,11 +18,12 @@ The default roadmap root is `.agents/roadmap/`. Treat `docs/roadmap/` as a legac
 ## Core Model
 
 ```txt
+roadmap   = the milestone tree that plans and tracks the project
 milestone = phase goal and acceptance gate
 sprint    = executable task checklist
 ```
 
-Milestones own sprints. A sprint must live under the milestone it serves.
+A roadmap owns milestones, and a milestone owns sprints. A sprint must live under the milestone it serves, and every milestone under the roadmap root `.agents/roadmap/`. The roadmap is the single source of truth for project direction and execution state.
 
 Recommended layout:
 
