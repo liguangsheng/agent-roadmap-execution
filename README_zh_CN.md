@@ -92,6 +92,7 @@ $roadmap-driven
 - Milestone 表示阶段目标和验收门槛。
 - Sprint 表示可执行、可验证、可恢复的任务切片。
 - `.agents/roadmap/` 只放 roadmap 控制面文档：根 `README.md`、milestone 目录、milestone `README.md` 和 sprint 文件；规格、设计、报告、发布说明、证据附件等放到 `docs/` 或其他合适位置再链接。
+- roadmap 内容只留在 roadmap 目录内：不得在 `.agents/roadmap/` 之外复述 milestone、sprint、状态或 Resume Point；其他文档、代码注释和提交信息只链接到 roadmap，不复制其内容。
 - 旧的 `docs/roadmap/` 视为 legacy 路径；重组 roadmap 时迁移到 `.agents/roadmap/`，除非项目明确要求继续使用旧路径。
 - 未来 milestone 在拆分成可执行 sprint 文件前保持 `draft`。
 - 执行时从第一个非 `done` sprint 恢复，并优先恢复已有的 `in-progress` sprint。

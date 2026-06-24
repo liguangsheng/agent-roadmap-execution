@@ -94,6 +94,7 @@ Use the roadmap-driven skill and continue from the roadmap Resume Point.
 - Milestones represent phase goals and acceptance gates.
 - Sprints represent executable, verifiable, resumable task slices.
 - `.agents/roadmap/` contains only roadmap control-plane documents: the root `README.md`, milestone directories, milestone `README.md` files, and sprint files. Put specs, designs, reports, release notes, evidence attachments, and other auxiliary docs elsewhere under `docs/` or another appropriate project directory and link to them.
+- Roadmap content stays inside the roadmap tree: do not restate milestones, sprints, statuses, or Resume Points outside `.agents/roadmap/`. Other docs, code comments, and commit messages link to the roadmap instead of duplicating it.
 - Legacy `docs/roadmap/` is treated as a migration source. Reorganize roadmap files into `.agents/roadmap/` unless the repository explicitly opts into the old path.
 - Future milestones stay `draft` until split into executable sprint files.
 - Execution resumes from the first non-`done` sprint, preferring an existing `in-progress` sprint.

@@ -39,6 +39,8 @@ Recommended layout:
 
 `.agents/roadmap/` is only for roadmap control-plane documents: the root `README.md`, milestone directories, milestone `README.md` files, and sprint files named like `Sxxx-*.md`. Do not create or keep specifications, grammar docs, design docs, reports, release notes, implementation plans, evidence artifacts, status docs, feature profiles, or other auxiliary documents under `.agents/roadmap/`; put them elsewhere such as `docs/` or another appropriate project directory and link to them from the relevant milestone or sprint.
 
+Keep roadmap content inside the roadmap tree. Do not restate roadmap content—milestone goals, sprint tasks and checklists, statuses, Resume Points, or the milestone/sprint breakdown—outside `.agents/roadmap/`. Other documents, code comments, and commit messages may link or point to the roadmap location, but must not duplicate or paraphrase what it contains, so the tree stays the single source of truth and outside docs cannot drift from it.
+
 If old flat `milestones.md`, `PLAN.md`, `sprints/`, legacy `docs/roadmap/`, or other non-roadmap files exist, treat them as migration sources only. Move roadmap control-plane content into `.agents/roadmap/` when reorganizing, move non-roadmap content outside `.agents/roadmap/`, then make the tree the authority.
 
 ## Milestone Creation Guard
