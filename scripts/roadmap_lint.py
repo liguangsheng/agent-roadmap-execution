@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate roadmap structure used by the agent-roadmap-execution skill."""
+"""Validate roadmap structure used by the roadmap-driven skill."""
 
 from __future__ import annotations
 

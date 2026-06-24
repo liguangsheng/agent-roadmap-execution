@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# install.sh - Install the agent-roadmap-execution skill.
+# install.sh - Install the roadmap-driven skill.
 #
 # Installs SKILL.md, agents/openai.yaml, and scripts/roadmap_lint.py into the
 # skills directory of one or more AI coding agents so the skill can be invoked
-# as agent-roadmap-execution. The same SKILL.md works for every supported tool;
+# as roadmap-driven. The same SKILL.md works for every supported tool;
 # only the install directory and invocation differ.
 #
 # Supported agents and default targets:
-#   codex     ~/.codex/skills/agent-roadmap-execution            (override: CODEX_SKILLS_DIR)
-#   claude    ~/.claude/skills/agent-roadmap-execution           (override: CLAUDE_SKILLS_DIR)
-#   opencode  ~/.config/opencode/skills/agent-roadmap-execution  (override: OPENCODE_SKILLS_DIR)
+#   codex     ~/.codex/skills/roadmap-driven            (override: CODEX_SKILLS_DIR)
+#   claude    ~/.claude/skills/roadmap-driven           (override: CLAUDE_SKILLS_DIR)
+#   opencode  ~/.config/opencode/skills/roadmap-driven  (override: OPENCODE_SKILLS_DIR)
 #
 # By default the script installs from the directory it lives in. If it is run
 # without neighbouring skill files (e.g. curl ... | bash), it clones the public
@@ -33,8 +33,8 @@
 
 set -euo pipefail
 
-readonly DEFAULT_GIT_URL="https://github.com/liguangsheng/agent-roadmap-execution.git"
-readonly SKILL_NAME="agent-roadmap-execution"
+readonly DEFAULT_GIT_URL="https://github.com/liguangsheng/roadmap-driven.git"
+readonly SKILL_NAME="roadmap-driven"
 readonly SUPPORTED_AGENTS="codex claude opencode"
 
 # --- output helpers ----------------------------------------------------------

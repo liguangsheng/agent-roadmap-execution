@@ -1,5 +1,5 @@
 ---
-name: agent-roadmap-execution
+name: roadmap-driven
 description: Use when a user wants an AI coding agent to plan, organize, or execute multi-session roadmap work using `.agents/roadmap` milestone directories, executable sprint files, validation evidence, and per-sprint commits; applies to roadmap structure, milestone/sprint mapping, draft vs planned status, implementation sequencing, pause/resume handoffs, and keeping project plans, docs, and execution evidence aligned.
 ---
 

@@ -1,4 +1,4 @@
-# Agent Roadmap Execution
+# Roadmap-Driven Development
 
 中文 | [English](README.md)
 
@@ -8,7 +8,7 @@
 
 最快的安装方式是让你的编程 agent 来做。把仓库地址连同类似下面的提示发给 Codex、Claude Code 或 opencode：
 
-> 安装 `agent-roadmap-execution` skill，仓库地址 https://github.com/liguangsheng/agent-roadmap-execution：先检查 `SKILL.md` 和 `agents/openai.yaml`，安装到我的 agent skills 目录，然后验证。
+> 安装 `roadmap-driven` skill，仓库地址 https://github.com/liguangsheng/roadmap-driven：先检查 `SKILL.md` 和 `agents/openai.yaml`，安装到我的 agent skills 目录，然后验证。
 
 agent 会 clone 仓库、运行 `install.sh`，并确认 `SKILL.md` 和 lint 冒烟测试通过。想自己安装见 [手动安装](#手动安装)。
 
@@ -18,15 +18,15 @@ agent 会 clone 仓库、运行 `install.sh`，并确认 `SKILL.md` 和 lint 冒
 
 | Agent | 默认安装目录 | 使用方式 |
 | --- | --- | --- |
-| [Codex](https://developers.openai.com/codex/skills) | `~/.codex/skills/agent-roadmap-execution` | 显式调用：`$agent-roadmap-execution` |
-| [Claude Code](https://code.claude.com/docs/en/skills) | `~/.claude/skills/agent-roadmap-execution` | 按 description 自动发现；让 Claude 使用它即可 |
-| [opencode](https://opencode.ai/docs/skills/) | `~/.config/opencode/skills/agent-roadmap-execution` | 按 description 自动发现；让 opencode 使用它即可 |
+| [Codex](https://developers.openai.com/codex/skills) | `~/.codex/skills/roadmap-driven` | 显式调用：`$roadmap-driven` |
+| [Claude Code](https://code.claude.com/docs/en/skills) | `~/.claude/skills/roadmap-driven` | 按 description 自动发现；让 Claude 使用它即可 |
+| [opencode](https://opencode.ai/docs/skills/) | `~/.config/opencode/skills/roadmap-driven` | 按 description 自动发现；让 opencode 使用它即可 |
 
 opencode 也会读取 `~/.claude/skills/`，所以装到 Claude Code 目录后 opencode 同样能用。`agents/openai.yaml` 是 Codex 专用的 UI 元数据，Claude Code 和 opencode 会忽略它。
 
 ## 概述
 
-`agent-roadmap-execution` 适合需要暂停、恢复和跨会话延续的代码仓库。它把 roadmap 状态保存在仓库内的 Markdown 文件中，并把每个 sprint 视为一个可验证、可恢复的 AI 编程任务切片。
+`roadmap-driven` 适合需要暂停、恢复和跨会话延续的代码仓库。它把 roadmap 状态保存在仓库内的 Markdown 文件中，并把每个 sprint 视为一个可验证、可恢复的 AI 编程任务切片。
 
 ## 内容
 
@@ -42,15 +42,15 @@ opencode 也会读取 `~/.claude/skills/`，所以装到 Claude Code 目录后 o
 克隆后本地安装：
 
 ```bash
-git clone https://github.com/liguangsheng/agent-roadmap-execution.git
-cd agent-roadmap-execution
+git clone https://github.com/liguangsheng/roadmap-driven.git
+cd roadmap-driven
 ./install.sh
 ```
 
 或者一行远程安装（脚本会自动 clone 仓库再安装）：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/liguangsheng/agent-roadmap-execution/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/liguangsheng/roadmap-driven/main/install.sh | bash
 ```
 
 用 `--agent` 指定具体的 agent（可重复，或用 `all`）：
@@ -76,7 +76,7 @@ curl -fsSL https://raw.githubusercontent.com/liguangsheng/agent-roadmap-executio
 安装完成后，按你所用 agent 的方式使用（见 [支持的 agent](#支持的-agent)）——例如在 Codex 中：
 
 ```txt
-$agent-roadmap-execution
+$roadmap-driven
 ```
 
 ## 新会话恢复
@@ -84,7 +84,7 @@ $agent-roadmap-execution
 如果项目已经有 `.agents/roadmap/`，并且你希望 agent 从上次暂停的位置继续，建议在新会话的第一句话直接写：
 
 ```txt
-使用agent-roadmap-execution技能，从 roadmap 的 Resume Point 继续。
+使用roadmap-driven技能，从 roadmap 的 Resume Point 继续。
 ```
 
 ## 核心约束

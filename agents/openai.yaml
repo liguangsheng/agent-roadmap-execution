@@ -1,4 +1,4 @@
 interface:
-  display_name: "Agent Roadmap Execution"
+  display_name: "Roadmap-Driven Development"
   short_description: "Drive roadmap sprints with completion audits."
-  default_prompt: "Use $agent-roadmap-execution to organize this project in .agents/roadmap, keep draft and planned statuses honest, run roadmap lint when available, and execute the next actionable sprint with validation evidence, a completion audit, and a durable checkpoint."
+  default_prompt: "Use $roadmap-driven to organize this project in .agents/roadmap, keep draft and planned statuses honest, run roadmap lint when available, and execute the next actionable sprint with validation evidence, a completion audit, and a durable checkpoint."

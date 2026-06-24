@@ -1,4 +1,4 @@
-# Agent Roadmap Execution
+# Roadmap-Driven Development
 
 English | [中文](README_zh_CN.md)
 
@@ -8,8 +8,8 @@ A portable agent skill for planning and executing multi-session AI coding work w
 
 The quickest way to install is to let your coding agent do it. Hand the repository URL to Codex, Claude Code, or opencode with a prompt like:
 
-> Install the `agent-roadmap-execution` skill from
-> https://github.com/liguangsheng/agent-roadmap-execution: inspect `SKILL.md`
+> Install the `roadmap-driven` skill from
+> https://github.com/liguangsheng/roadmap-driven: inspect `SKILL.md`
 > and `agents/openai.yaml`, install it into my agent's skills directory, then verify.
 
 The agent clones the repository, runs `install.sh`, and confirms `SKILL.md` and the lint smoke test pass. To install it yourself, see [Manual Install](#manual-install).
@@ -20,15 +20,15 @@ The skill is a directory with a single `SKILL.md` (plus `scripts/`). Every suppo
 
 | Agent | Default install dir | How to use it |
 | --- | --- | --- |
-| [Codex](https://developers.openai.com/codex/skills) | `~/.codex/skills/agent-roadmap-execution` | invoke explicitly: `$agent-roadmap-execution` |
-| [Claude Code](https://code.claude.com/docs/en/skills) | `~/.claude/skills/agent-roadmap-execution` | auto-discovered by description; ask Claude to use it |
-| [opencode](https://opencode.ai/docs/skills/) | `~/.config/opencode/skills/agent-roadmap-execution` | auto-discovered by description; ask opencode to use it |
+| [Codex](https://developers.openai.com/codex/skills) | `~/.codex/skills/roadmap-driven` | invoke explicitly: `$roadmap-driven` |
+| [Claude Code](https://code.claude.com/docs/en/skills) | `~/.claude/skills/roadmap-driven` | auto-discovered by description; ask Claude to use it |
+| [opencode](https://opencode.ai/docs/skills/) | `~/.config/opencode/skills/roadmap-driven` | auto-discovered by description; ask opencode to use it |
 
 opencode also reads `~/.claude/skills/`, so a Claude Code install already makes the skill available in opencode. `agents/openai.yaml` is Codex-only UI metadata; Claude Code and opencode ignore it.
 
 ## Overview
 
-`agent-roadmap-execution` is designed for repositories where work needs to be paused and resumed without reconstructing context from chat. It keeps roadmap state in repo-local Markdown files and treats every sprint as a verifiable, resumable work package for an AI coding agent.
+`roadmap-driven` is designed for repositories where work needs to be paused and resumed without reconstructing context from chat. It keeps roadmap state in repo-local Markdown files and treats every sprint as a verifiable, resumable work package for an AI coding agent.
 
 ## Contents
 
@@ -44,15 +44,15 @@ The repository ships an official `install.sh`. By default it auto-detects which 
 Install from a local clone:
 
 ```bash
-git clone https://github.com/liguangsheng/agent-roadmap-execution.git
-cd agent-roadmap-execution
+git clone https://github.com/liguangsheng/roadmap-driven.git
+cd roadmap-driven
 ./install.sh
 ```
 
 Or a one-line remote install (the script clones the repository for you):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/liguangsheng/agent-roadmap-execution/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/liguangsheng/roadmap-driven/main/install.sh | bash
 ```
 
 Choose specific agents with `--agent` (repeatable, or `all`):
@@ -78,7 +78,7 @@ Override any default install directory with `CODEX_SKILLS_DIR`, `CLAUDE_SKILLS_D
 After installation, use it per your agent (see [Supported Agents](#supported-agents)) — for example in Codex:
 
 ```txt
-$agent-roadmap-execution
+$roadmap-driven
 ```
 
 ## Resuming in a New Session
@@ -86,7 +86,7 @@ $agent-roadmap-execution
 If the project already has `.agents/roadmap/` and you want the agent to continue from where it paused, open a new session with:
 
 ```txt
-Use the agent-roadmap-execution skill and continue from the roadmap Resume Point.
+Use the roadmap-driven skill and continue from the roadmap Resume Point.
 ```
 
 ## What It Enforces
