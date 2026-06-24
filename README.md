@@ -1,64 +1,102 @@
 # Agent Roadmap Execution
 
-中文 | [English](README_en.md)
+English | [中文](README_zh_CN.md)
 
-`agent-roadmap-execution` 是一个 Codex skill，用于把多会话的 AI 编程工作组织成 milestone 目录、可执行 sprint 文件、验证证据和每个 sprint 的提交记录。
+A portable agent skill for planning and executing multi-session AI coding work with milestone directories, executable sprint files, validation evidence, and per-sprint commits. One `SKILL.md` works across **[Codex](https://developers.openai.com/codex/skills)**, **[Claude Code](https://code.claude.com/docs/en/skills)**, and **[opencode](https://opencode.ai/docs/skills/)**.
 
-这个 skill 适合需要暂停、恢复和跨会话延续的代码仓库。它把 roadmap 状态保存在仓库内的 Markdown 文件中，并把每个 sprint 视为一个可验证、可恢复的 AI 编程任务切片。
+## Install With an Agent
 
-## 内容
+The quickest way to install is to let your coding agent do it. Hand the repository URL to Codex, Claude Code, or opencode with a prompt like:
 
-- `SKILL.md`：skill 定义和执行工作流。
-- `agents/openai.yaml`：Codex skill 列表和默认调用提示使用的 UI 元数据。
-- `scripts/roadmap_lint.py`：检查 `.agents/roadmap/` 的结构、状态、链接、Resume Point 和 active sprint 数量。
+> Install the `agent-roadmap-execution` skill from
+> https://github.com/liguangsheng/agent-roadmap-execution: inspect `SKILL.md`
+> and `agents/openai.yaml`, install it into my agent's skills directory, then verify.
 
-## 安装
+The agent clones the repository, runs `install.sh`, and confirms `SKILL.md` and the lint smoke test pass. To install it yourself, see [Manual Install](#manual-install).
 
-把下面这句话发给 Codex，让 agent 直接从远程仓库安装：
+## Supported Agents
 
-```txt
-请帮我安装这个 Codex skill：https://github.com/liguangsheng/agent-roadmap-execution.git。请检查仓库中的 SKILL.md 和 agents/openai.yaml，把它安装到我的 Codex skills 目录中，并验证安装结果。
+The skill is a directory with a single `SKILL.md` (plus `scripts/`). Every supported tool reads the same `SKILL.md`; only the install directory and invocation differ.
+
+| Agent | Default install dir | How to use it |
+| --- | --- | --- |
+| [Codex](https://developers.openai.com/codex/skills) | `~/.codex/skills/agent-roadmap-execution` | invoke explicitly: `$agent-roadmap-execution` |
+| [Claude Code](https://code.claude.com/docs/en/skills) | `~/.claude/skills/agent-roadmap-execution` | auto-discovered by description; ask Claude to use it |
+| [opencode](https://opencode.ai/docs/skills/) | `~/.config/opencode/skills/agent-roadmap-execution` | auto-discovered by description; ask opencode to use it |
+
+opencode also reads `~/.claude/skills/`, so a Claude Code install already makes the skill available in opencode. `agents/openai.yaml` is Codex-only UI metadata; Claude Code and opencode ignore it.
+
+## Overview
+
+`agent-roadmap-execution` is designed for repositories where work needs to be paused and resumed without reconstructing context from chat. It keeps roadmap state in repo-local Markdown files and treats every sprint as a verifiable, resumable work package for an AI coding agent.
+
+## Contents
+
+- `SKILL.md`: the skill definition and operating workflow (read by every supported agent).
+- `agents/openai.yaml`: Codex-only UI metadata for skill lists and default invocation.
+- `scripts/roadmap_lint.py`: checks `.agents/roadmap/` structure, statuses, links, Resume Point text, and active sprint count.
+- `install.sh`: installs the skill into one or more agent skills directories from a local or remote source, via copy or symlink, with a built-in post-install verification.
+
+## Manual Install
+
+The repository ships an official `install.sh`. By default it auto-detects which agent tools are installed and installs the skill for each of them; after copying it verifies `SKILL.md` and runs a `roadmap_lint.py` smoke test.
+
+Install from a local clone:
+
+```bash
+git clone https://github.com/liguangsheng/agent-roadmap-execution.git
+cd agent-roadmap-execution
+./install.sh
 ```
 
-安装完成后，可以显式调用：
+Or a one-line remote install (the script clones the repository for you):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/liguangsheng/agent-roadmap-execution/main/install.sh | bash
+```
+
+Choose specific agents with `--agent` (repeatable, or `all`):
+
+```bash
+./install.sh --agent claude              # Claude Code only
+./install.sh --agent codex --agent opencode
+./install.sh --agent all                 # all three, whether or not detected
+```
+
+Common options:
+
+- `--agent NAME`: install for `codex`, `claude`, `opencode`, or `all`. Repeatable. Default: auto-detect installed tools (fallback: `codex`).
+- `--target DIR`: install into a single explicit directory, ignoring the per-agent defaults.
+- `--link`: install as a symlink so a `git pull` in the source takes effect immediately; handy for development.
+- `--git URL`: clone and install from the given remote repository.
+- `--force`: overwrite a target even when it holds unrelated files.
+- `--no-verify`: skip the post-install verification.
+- Run `./install.sh --help` for the full reference.
+
+Override any default install directory with `CODEX_SKILLS_DIR`, `CLAUDE_SKILLS_DIR`, or `OPENCODE_SKILLS_DIR`.
+
+After installation, use it per your agent (see [Supported Agents](#supported-agents)) — for example in Codex:
 
 ```txt
 $agent-roadmap-execution
 ```
 
-## 新会话恢复
+## Resuming in a New Session
 
-如果项目已经有 `.agents/roadmap/`，并且你希望 Codex 从上次暂停的位置继续，建议在新会话的第一句话直接写：
+If the project already has `.agents/roadmap/` and you want the agent to continue from where it paused, open a new session with:
 
 ```txt
-使用agent-roadmap-execution技能，从 roadmap 的 Resume Point 继续。
+Use the agent-roadmap-execution skill and continue from the roadmap Resume Point.
 ```
 
-## 核心约束
+## What It Enforces
 
-- Milestone 表示阶段目标和验收门槛。
-- Sprint 表示可执行、可验证、可恢复的任务切片。
-- `.agents/roadmap/` 只放 roadmap 控制面文档：根 `README.md`、milestone 目录、milestone `README.md` 和 sprint 文件；规格、设计、报告、发布说明、证据附件等放到 `docs/` 或其他合适位置再链接。
-- 旧的 `docs/roadmap/` 视为 legacy 路径；重组 roadmap 时迁移到 `.agents/roadmap/`，除非项目明确要求继续使用旧路径。
-- 未来 milestone 在拆分成可执行 sprint 文件前保持 `draft`。
-- 执行时从第一个非 `done` sprint 恢复，并优先恢复已有的 `in-progress` sprint。
-- 执行过程中不得创建新 milestone，除非用户明确要求扩展、重规划、拆分或创建 roadmap 范围。
-- 完成的 sprint 必须记录验证证据，并深度审计目标是否真正完成；如有缺口，保持 `in-progress` 并补齐后重新验证和审计。如果项目是 Git 仓库，还必须在进入下一个 sprint 前完成提交。
-- 创建、重组或更新 roadmap 状态后，优先运行 `scripts/roadmap_lint.py` 校验结构；如果运行不了，要手动检查同等项目并说明限制。
-
-## 使用方法
-
-推荐把 roadmap 工作拆成两个 Codex 会话：
-
-- “方向盘”会话：负责和 AI 讨论项目方向，维护 roadmap、milestone 和 sprint 的目标、验收门槛、任务切片、验证方法、Done Criteria 等内容。
-- “发动机”会话：负责执行，不再重新讨论路线。可以用 `/goal` 或等价的持续执行方式，让 Codex 按 roadmap 从当前 Resume Point 往前推进。
-
-如果中途发现执行方向跑偏，建议回到“方向盘”会话调整 roadmap：可以把受影响的 milestone 或 sprint 标记为 `blocked`，记录偏差原因和恢复条件；必要时再明确插入一个校正用 milestone。比如 M08 的方向已经不适合继续推进，可以暂停后续 M09，在 M08 后插入 M08.1 来校正路线，再让“发动机”会话从新的 Resume Point 继续。
-
-注意事项：
-
-- 规划和路线调整尽量只在“方向盘”会话中完成，不要让“发动机”会话临场改 roadmap，避免两个会话对项目状态产生分歧。
-- “发动机”会话应优先执行当前 `in-progress` sprint；如果没有，则执行第一个非 `done` sprint。
-- 每个 sprint 完成前，都要记录验证证据并审计 Goal、Tasks、Done Criteria、变更文件和相关 milestone 验收条件；发现缺口就继续补齐，不能只因为命令通过就进入下一个 sprint。如果项目是 Git 仓库，还应先提交再进入下一个 sprint。
-- 如果安装目录可用，可以在目标仓库运行 `python ~/.codex/skills/agent-roadmap-execution/scripts/roadmap_lint.py .` 来检查 roadmap 结构。目标仓库还没有 `.agents/roadmap/` 时，可加 `--allow-missing` 做非阻塞检查；旧项目可用 `--roadmap docs/roadmap` 显式校验历史路径。
-- 建议使用能力较强的模型执行 roadmap 工作，尤其是涉及跨文件修改、长期上下文恢复和验收判断时。
+- Milestones represent phase goals and acceptance gates.
+- Sprints represent executable, verifiable, resumable task slices.
+- `.agents/roadmap/` contains only roadmap control-plane documents: the root `README.md`, milestone directories, milestone `README.md` files, and sprint files. Put specs, designs, reports, release notes, evidence attachments, and other auxiliary docs elsewhere under `docs/` or another appropriate project directory and link to them.
+- Legacy `docs/roadmap/` is treated as a migration source. Reorganize roadmap files into `.agents/roadmap/` unless the repository explicitly opts into the old path.
+- Future milestones stay `draft` until split into executable sprint files.
+- Execution resumes from the first non-`done` sprint, preferring an existing `in-progress` sprint.
+- New milestones are not created during execution unless the user explicitly asks to expand, replan, split, or create roadmap scope.
+- Completed sprints must record validation evidence and pass a deep completion audit of the stated goal. If gaps remain, keep the sprint `in-progress`, close the gaps, then rerun validation and the audit. In Git repositories, commit before moving to the next sprint.
+- After creating, reorganizing, or updating roadmap status, run `scripts/roadmap_lint.py` when available. If it cannot run, manually check the same items and state the limitation.
