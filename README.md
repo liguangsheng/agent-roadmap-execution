@@ -117,6 +117,7 @@ Use the roadmap-driven skill and continue from the roadmap Resume Point.
 - Future milestones stay `draft` until split into executable sprint files.
 - Execution resumes from the first non-`done` sprint, preferring an existing `in-progress` sprint.
 - New milestones are not created during execution unless the user explicitly asks to expand, replan, split, or create roadmap scope.
+- Decisions are routed by impact: significant or hard-to-reverse choices (scope, architecture, dependencies, security, ambiguous requirements) are raised with the user; small, reversible ones are decided autonomously with correctness first. Decisions are recorded in the sprint and milestone.
 - Completed sprints must record validation evidence and pass a deep completion audit of the stated goal. If gaps remain, keep the sprint `in-progress`, close the gaps, then rerun validation and the audit. In Git repositories, commit before moving to the next sprint.
 - After creating, reorganizing, or updating roadmap status, run `scripts/roadmap_lint.py` when available. If it cannot run, manually check the same items and state the limitation.
 - `SKILL.md` ends with an **Anti-Patterns** checklist of common failure modes (unrequested milestones, validation-as-done, status drift, …) the agent self-checks against.

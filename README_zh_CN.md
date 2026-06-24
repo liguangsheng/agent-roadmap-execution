@@ -115,6 +115,7 @@ $roadmap-driven
 - 未来 milestone 在拆分成可执行 sprint 文件前保持 `draft`。
 - 执行时从第一个非 `done` sprint 恢复，并优先恢复已有的 `in-progress` sprint。
 - 执行过程中不得创建新 milestone，除非用户明确要求扩展、重规划、拆分或创建 roadmap 范围。
+- 按影响区分决策：重要或难以撤销的决策（范围、架构、依赖、安全、含糊的需求）先征询用户；小而可逆的决策按正确性优先自动决定。决策记录到 sprint 和 milestone。
 - 完成的 sprint 必须记录验证证据，并深度审计目标是否真正完成；如有缺口，保持 `in-progress` 并补齐后重新验证和审计。如果项目是 Git 仓库，还必须在进入下一个 sprint 前完成提交。
 - 创建、重组或更新 roadmap 状态后，优先运行 `scripts/roadmap_lint.py` 校验结构；如果运行不了，要手动检查同等项目并说明限制。
 - `SKILL.md` 末尾附有 **Anti-Patterns**（反模式）自检清单，列出常见失败模式（擅自加 milestone、命令过即当完成、状态不一致……）供执行时对照。

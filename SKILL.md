@@ -51,6 +51,14 @@ If old flat `milestones.md`, `PLAN.md`, `sprints/`, legacy `docs/roadmap/`, or o
 - During execution, if new future work is discovered, record it in the current sprint Evidence/Notes, the current milestone Open Questions, or an existing backlog if one already exists. If no appropriate place exists, report it to the user and ask before changing roadmap scope.
 - Updating existing milestone/sprint status, evidence, links, Resume Point, or sprint tables for the work already selected is allowed; creating a new milestone is a separate planning action requiring explicit user intent.
 
+## Decision Handling
+
+Decisions arise constantly during execution; route them by impact.
+
+- Significant decisions — ask the user first. Pause before acting when a choice is hard to reverse, changes scope or roadmap structure, selects an architecture, API, data model, or dependency, affects security or user-facing behavior, or resolves an ambiguous requirement. Present the options with a recommendation; do not guess.
+- Small decisions — decide autonomously, correctness first. For low-impact, reversible choices (naming, local structure, test layout, obvious defaults), pick the most correct option that fits the codebase and proceed without blocking. Favor correctness and consistency over convenience.
+- Record either way. Capture autonomous decisions and their rationale in the current sprint Evidence (`Decisions`), and milestone-level decisions in the milestone `Decisions` section, so the reasoning is durable and resumable. A decision that changes roadmap scope still requires the Milestone Creation Guard's explicit user intent.
+
 ## Status Rules
 
 Use these milestone statuses consistently:
@@ -174,6 +182,7 @@ Status: planned|in-progress|blocked|done
 - Validation:
 - Completion audit:
 - Commit:
+- Decisions:
 - Notes:
 
 ## Done Criteria
@@ -199,6 +208,7 @@ Before marking a sprint `done`, verify and record each item:
 - Milestone Acceptance Criteria: the sprint result advances or satisfies the owning milestone gate as expected.
 - Out of Scope: no excluded work was silently pulled into the sprint.
 - Evidence: validation, audit result, notes, and blockers are recorded in the sprint file or linked artifact.
+- Decisions: significant choices were raised with the user before acting; autonomous choices and their rationale are recorded in the sprint.
 - Commit: in Git repositories, the completed sprint has its own commit before later sprint work begins.
 
 ## Operating Workflow
@@ -276,3 +286,5 @@ Common failure modes to self-check against; each points back to the governing ru
 - Overwriting user work: editing unrelated pre-existing changes during a sprint. → Separate agent edits from user changes; leave user work untouched (see When asked to execute).
 - Far-future detail: writing detailed sprints for distant milestones. → Keep them `draft`; split only the next actionable milestone (see Quality Gates).
 - Uncommitted completion: starting the next sprint before committing the finished one in Git repositories. → Commit each done sprint separately first (see Quality Gates).
+- Silent big decision: making a hard-to-reverse, scope-, architecture-, or security-affecting choice without asking. → Ask the user first with options and a recommendation; record the resolution (see Decision Handling).
+- Blocking on trivia: asking the user about a low-impact, reversible choice. → Decide it correctness-first, proceed, and record it (see Decision Handling).
