@@ -3,7 +3,7 @@ name: roadmap-driven
 description: Use when a user wants an AI coding agent to plan, organize, or execute multi-session roadmap work using `.agents/roadmap` milestone directories, executable sprint files, validation evidence, and per-sprint commits; applies to roadmap structure, milestone/sprint mapping, draft vs planned status, implementation sequencing, pause/resume handoffs, and keeping project plans, docs, and execution evidence aligned.
 ---
 
-# Agent Roadmap Execution
+# Roadmap-Driven Development
 
 Use this skill to structure and drive a project through a tree-shaped roadmap where milestones define completion gates and sprints define executable work.
 
@@ -259,3 +259,19 @@ When pausing or handing off:
 - Prefer repo-local docs and checklists over chat-only plans.
 - Treat validation as necessary but not sufficient: each sprint must pass a target-focused completion audit before it is done, and any discovered gap must be closed inside that sprint unless it is explicitly out of scope or blocked.
 - For Git-backed projects, sprint completion is not fully durable until the verified sprint changes are committed separately from later sprint work.
+
+## Anti-Patterns
+
+Common failure modes to self-check against; each points back to the governing rule.
+
+- Structuring trivial work: a roadmap for a one-shot fix the user didn't ask to plan. → Use the roadmap only for multi-step/multi-session work.
+- Polluting the tree: specs, designs, reports, or evidence under `.agents/roadmap/`. → Keep only control-plane docs there; link out (see Core Model).
+- Leaking roadmap content: restating milestones/sprints/statuses/Resume Points outside the tree. → Link to the roadmap, never duplicate it (see Core Model).
+- Unrequested milestones: adding milestones on a "continue"/"resume"/"按 roadmap 执行" request. → Creating milestones needs explicit user intent (see Milestone Creation Guard).
+- Premature `planned`: marking a README-only milestone `planned`. → `planned` needs at least one executable sprint (see Status Rules).
+- Status drift: the sprint `Status:` line and the milestone sprint table disagree. → Keep both consistent when both exist (see Sprint Template).
+- Validation-as-done: marking a sprint `done` because commands passed, without auditing the goal. → Pass the completion audit; close gaps inside the sprint (see Completion Audit Checklist).
+- Speculative status: advancing later sprints before working them. → Only the active sprint is `in-progress` (see When pausing or handing off).
+- Overwriting user work: editing unrelated pre-existing changes during a sprint. → Separate agent edits from user changes; leave user work untouched (see When asked to execute).
+- Far-future detail: writing detailed sprints for distant milestones. → Keep them `draft`; split only the next actionable milestone (see Quality Gates).
+- Uncommitted completion: starting the next sprint before committing the finished one in Git repositories. → Commit each done sprint separately first (see Quality Gates).
